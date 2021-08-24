@@ -4,5 +4,6 @@ public enum TravelType {
     BASIC,
     ACTIVE,
     FAMILY,
-    SIGHTSEEING
+    SIGHTSEEING,
+    SKY_TRAVEL
 }

@@ -28,4 +28,10 @@ public class ComplaintAnswer {
     @Column(name = "CREATION_DATE")
     @NotNull
     private LocalDateTime creationDate;
+
+    public ComplaintAnswer(@NotNull Complaint complaint, @NotNull String answer, @NotNull LocalDateTime creationDate) {
+        this.complaint = complaint;
+        this.answer = answer;
+        this.creationDate = creationDate;
+    }
 }

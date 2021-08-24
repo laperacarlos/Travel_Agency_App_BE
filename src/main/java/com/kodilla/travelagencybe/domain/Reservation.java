@@ -30,6 +30,10 @@ public class Reservation {
     @JoinColumn(name = "TRAVEL_SKY_ID")
     private TravelSky travelSky;
 
+    @OneToOne(mappedBy = "reservation")
+    @JoinColumn(name = "COMPLAINT_ID")
+    private Complaint complaint;
+
     @Column(name = "CREATION_DATE")
     @NotNull
     private LocalDateTime creationDate;

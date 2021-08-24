@@ -30,7 +30,6 @@ public class User {
     @NotNull
     private LocalDateTime creationDate;
 
-    //???? to be considered if necessary
     @Column(name = "ACTIVE")
     @NotNull
     private boolean isActive;

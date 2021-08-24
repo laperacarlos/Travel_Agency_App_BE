@@ -33,6 +33,10 @@ public class Complaint {
     @Column(name = "CLOSING_DATE")
     private LocalDateTime closingDate;
 
+    @OneToOne(mappedBy = "complaint")
+    @JoinColumn(name = "COMPLAINT_ANSWER_ID")
+    private ComplaintAnswer complaintAnswer;
+
     @Column(name = "STATUS")
     @NotNull
     private Status status;

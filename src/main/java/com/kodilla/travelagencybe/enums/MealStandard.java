@@ -5,5 +5,6 @@ public enum MealStandard {
     ONE_MEAL,
     TWO_MEALS,
     ALL_INCLUSIVE_ALC_FREE,
-    ALL_INCLUSIVE
+    ALL_INCLUSIVE,
+    AS_SKY_HOTEL_PROVIDES
 }
