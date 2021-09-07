@@ -1,5 +1,6 @@
 package com.kodilla.travelagencybe.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "COMPLAINTS_ANSWERS")
 public class ComplaintAnswer {
 
@@ -28,10 +30,4 @@ public class ComplaintAnswer {
     @Column(name = "CREATION_DATE")
     @NotNull
     private LocalDateTime creationDate;
-
-    public ComplaintAnswer(@NotNull Complaint complaint, @NotNull String answer, @NotNull LocalDateTime creationDate) {
-        this.complaint = complaint;
-        this.answer = answer;
-        this.creationDate = creationDate;
-    }
 }

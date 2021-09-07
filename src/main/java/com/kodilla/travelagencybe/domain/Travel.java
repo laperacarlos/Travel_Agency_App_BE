@@ -1,19 +1,19 @@
 package com.kodilla.travelagencybe.domain;
 
-import com.kodilla.travelagencybe.enums.HotelStandard;
-import com.kodilla.travelagencybe.enums.MealStandard;
 import com.kodilla.travelagencybe.enums.Status;
-import com.kodilla.travelagencybe.enums.TravelType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "TRAVELS")
 public class Travel {
@@ -32,23 +32,11 @@ public class Travel {
 
     @Column(name = "DEPARTURE_DATE")
     @NotNull
-    private LocalDateTime departureDate;
+    private LocalDate departureDate;
 
     @Column(name = "RETURN_DATE")
     @NotNull
-    private LocalDateTime returnDate;
-
-    @Column(name = "TRAVEL_TYPE")
-    @NotNull
-    private TravelType travelType;
-
-    @Column(name = "HOTEL_STANDARD")
-    @NotNull
-    private HotelStandard hotelStandard;
-
-    @Column(name = "MEAL_STANDARD")
-    @NotNull
-    private MealStandard mealStandard;
+    private LocalDate returnDate;
 
     @Column(name = "STATUS")
     @NotNull
@@ -64,18 +52,4 @@ public class Travel {
             fetch = FetchType.EAGER
     )
     private List<Reservation> listOfReservations = new ArrayList<>();
-
-    public Travel(@NotNull String origin, @NotNull String destination, @NotNull LocalDateTime departureDate,
-                  @NotNull LocalDateTime returnDate, @NotNull TravelType travelType, @NotNull HotelStandard hotelStandard,
-                  @NotNull MealStandard mealStandard, @NotNull LocalDateTime creationDate) {
-        this.origin = origin;
-        this.destination = destination;
-        this.departureDate = departureDate;
-        this.returnDate = returnDate;
-        this.travelType = travelType;
-        this.hotelStandard = hotelStandard;
-        this.mealStandard = mealStandard;
-        this.creationDate = creationDate;
-        this.status = Status.OPENED;
-    }
 }

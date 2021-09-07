@@ -1,13 +1,15 @@
 package com.kodilla.travelagencybe.domain;
 
-import com.kodilla.travelagencybe.enums.HotelStandard;
+import com.kodilla.travelagencybe.enums.Status;
 import com.kodilla.travelagencybe.exception.TravelSkyNotFoundException;
 import com.kodilla.travelagencybe.repository.TravelSkyDao;
+import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,14 +20,16 @@ public class TravelSkyTestSuite {
     @Autowired
     TravelSkyDao travelSkyDao;
 
+    @Autowired
+    TimeProvider timeProvider;
+
     @Test
     public void testCreateTravel() {
         //given
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
 
         //when
         TravelSky savedTravelSky = travelSkyDao.save(travelSky);
@@ -40,11 +44,12 @@ public class TravelSkyTestSuite {
     @Test
     public void testReadTravelSky() throws Exception {
         //given
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+                Status.OPENED,
+                LocalDateTime.of(2021, 8, 19, 14, 10),
+                new ArrayList<>());
         travelSkyDao.save(travelSky);
 
         //when
@@ -55,7 +60,6 @@ public class TravelSkyTestSuite {
         assertEquals("Boston", travelSkyFromDb.getDestination());
         assertEquals(LocalDateTime.of(2021, 11, 7, 21, 10), travelSkyFromDb.getDepartureDate());
         assertEquals(LocalDateTime.of(2021, 11, 27, 21, 10), travelSkyFromDb.getReturnDate());
-        assertEquals(HotelStandard.FOUR, travelSkyFromDb.getHotelStandard());
         assertEquals(LocalDateTime.of(2021, 8, 19, 14, 10), travelSkyFromDb.getCreationDate());
 
         //clean
@@ -65,23 +69,20 @@ public class TravelSkyTestSuite {
     @Test
     public void testUpdateTravelSky() {
         //given
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
 
         //when
         travelSky.setOrigin("Wroclaw");
         travelSky.setDestination("Paris");
-        travelSky.setHotelStandard(HotelStandard.ONE);
         TravelSky updatedTravelSky = travelSkyDao.save(travelSky);
 
         //then
         assertEquals("Wroclaw", updatedTravelSky.getOrigin());
         assertEquals("Paris", updatedTravelSky.getDestination());
-        assertEquals(HotelStandard.ONE, updatedTravelSky.getHotelStandard());
 
         //clean
         travelSkyDao.deleteAll();
@@ -91,11 +92,10 @@ public class TravelSkyTestSuite {
     public void testDeleteTravelSky() {
         //given
         //given
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
 
         //when

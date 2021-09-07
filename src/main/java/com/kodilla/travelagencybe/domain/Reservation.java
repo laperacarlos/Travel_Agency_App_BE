@@ -1,6 +1,10 @@
 package com.kodilla.travelagencybe.domain;
 
+import com.kodilla.travelagencybe.enums.HotelStandard;
+import com.kodilla.travelagencybe.enums.MealStandard;
 import com.kodilla.travelagencybe.enums.Status;
+import com.kodilla.travelagencybe.enums.TravelType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "RESERVATIONS")
 public class Reservation {
 
@@ -30,8 +35,19 @@ public class Reservation {
     @JoinColumn(name = "TRAVEL_SKY_ID")
     private TravelSky travelSky;
 
+    @Column(name = "TRAVEL_TYPE")
+    @NotNull
+    private TravelType travelType;
+
+    @Column(name = "HOTEL_STANDARD")
+    @NotNull
+    private HotelStandard hotelStandard;
+
+    @Column(name = "MEAL_STANDARD")
+    @NotNull
+    private MealStandard mealStandard;
+
     @OneToOne(mappedBy = "reservation")
-    @JoinColumn(name = "COMPLAINT_ID")
     private Complaint complaint;
 
     @Column(name = "CREATION_DATE")
@@ -41,18 +57,4 @@ public class Reservation {
     @Column(name = "STATUS")
     @NotNull
     private Status status;
-
-    public Reservation(@NotNull User user, @NotNull Travel travel, @NotNull LocalDateTime creationDate) {
-        this.user = user;
-        this.travel = travel;
-        this.creationDate = creationDate;
-        this.status = Status.OPENED;
-    }
-
-    public Reservation(@NotNull User user, @NotNull TravelSky travelSky, @NotNull LocalDateTime creationDate) {
-        this.user = user;
-        this.travelSky = travelSky;
-        this.creationDate = creationDate;
-        this.status = Status.OPENED;
-    }
 }

@@ -18,7 +18,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,22 +55,24 @@ public class ReservationTestSuite {
     @Test
     public void testCreateReservation() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                timeProvider.getTime());
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
-        Reservation skyReservation = new Reservation(user, travelSky, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
+        Reservation skyReservation = new Reservation(null, user, null, travelSky,
+                TravelType.SKY_TRAVEL, HotelStandard.FOUR, MealStandard.AS_SKY_HOTEL_PROVIDES,
+                null, timeProvider.getTime(), Status.OPENED);
 
         //when
         Reservation savedReservation = reservationDao.save(reservation);
@@ -82,23 +86,25 @@ public class ReservationTestSuite {
     @Test
     public void testReadReservation() throws Exception {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                timeProvider.getTime());
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
-        Reservation travelReservation = new Reservation(user, travel, LocalDateTime.of(2021, 8, 19, 14, 10));
+        Reservation travelReservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, LocalDateTime.of(2021, 8, 19, 14, 10), Status.OPENED);
+        Reservation skyReservation = new Reservation(null, user, null, travelSky,
+                TravelType.SKY_TRAVEL, HotelStandard.FOUR, MealStandard.AS_SKY_HOTEL_PROVIDES,
+                null, LocalDateTime.of(2021, 8, 19, 14, 10), Status.OPENED);
         reservationDao.save(travelReservation);
-        Reservation skyReservation = new Reservation(user, travelSky, LocalDateTime.of(2021, 8, 19, 14, 10));
         reservationDao.save(skyReservation);
 
         //when
@@ -108,11 +114,17 @@ public class ReservationTestSuite {
         //then
         assertEquals(user.getId(), travelReservationFromDb.getUser().getId());
         assertEquals(travel.getId(), travelReservationFromDb.getTravel().getId());
+        assertEquals(TravelType.BASIC, travelReservationFromDb.getTravelType());
+        assertEquals(HotelStandard.FOUR, travelReservationFromDb.getHotelStandard());
+        assertEquals(MealStandard.ALL_INCLUSIVE, travelReservationFromDb.getMealStandard());
         assertEquals(LocalDateTime.of(2021, 8, 19, 14, 10), travelReservationFromDb.getCreationDate());
         assertEquals(Status.OPENED, travelReservationFromDb.getStatus());
 
         assertEquals(user.getId(), skyReservationFromDb.getUser().getId());
         assertEquals(travelSky.getId(), skyReservationFromDb.getTravelSky().getId());
+        assertEquals(TravelType.SKY_TRAVEL, skyReservationFromDb.getTravelType());
+        assertEquals(HotelStandard.FOUR, travelReservationFromDb.getHotelStandard());
+        assertEquals(MealStandard.AS_SKY_HOTEL_PROVIDES, skyReservationFromDb.getMealStandard());
         assertEquals(LocalDateTime.of(2021, 8, 19, 14, 10), skyReservationFromDb.getCreationDate());
         assertEquals(Status.OPENED, skyReservationFromDb.getStatus());
     }
@@ -120,37 +132,47 @@ public class ReservationTestSuite {
     @Test
     public void testUpdateReservation() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                timeProvider.getTime());
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
-        Reservation travelReservation = new Reservation(user, travel, LocalDateTime.of(2021, 8, 19, 14, 10));
+        Reservation travelReservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
+        Reservation skyReservation = new Reservation(null, user, null, travelSky,
+                TravelType.SKY_TRAVEL, HotelStandard.FOUR, MealStandard.AS_SKY_HOTEL_PROVIDES,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(travelReservation);
-        Reservation skyReservation = new Reservation(user, travelSky, LocalDateTime.of(2021, 8, 19, 14, 10));
         reservationDao.save(skyReservation);
 
         //when
+        travelReservation.setTravelType(TravelType.SIGHTSEEING);
+        travelReservation.setHotelStandard(HotelStandard.ONE);
+        travelReservation.setMealStandard(MealStandard.EXCLUDED);
         travelReservation.setStatus(Status.CANCELED);
         travelReservation.setCreationDate(LocalDateTime.of(2021, 8, 22, 15, 10));
         Reservation updatedTravelReservation = reservationDao.save(travelReservation);
+        skyReservation.setHotelStandard(HotelStandard.TWO);
         skyReservation.setStatus(Status.CLOSED);
         skyReservation.setCreationDate(LocalDateTime.of(2021, 9, 22, 14, 10));
         Reservation updatedSkyReservation = reservationDao.save(skyReservation);
 
         //then
+        assertEquals(TravelType.SIGHTSEEING, updatedTravelReservation.getTravelType());
+        assertEquals(HotelStandard.ONE, updatedTravelReservation.getHotelStandard());
+        assertEquals(MealStandard.EXCLUDED, updatedTravelReservation.getMealStandard());
         assertEquals(Status.CANCELED, updatedTravelReservation.getStatus());
         assertEquals(LocalDateTime.of(2021, 8, 22, 15, 10), updatedTravelReservation.getCreationDate());
 
+        assertEquals(HotelStandard.TWO, updatedSkyReservation.getHotelStandard());
         assertEquals(Status.CLOSED, updatedSkyReservation.getStatus());
         assertEquals(LocalDateTime.of(2021, 9, 22, 14, 10), updatedSkyReservation.getCreationDate());
     }
@@ -158,23 +180,25 @@ public class ReservationTestSuite {
     @Test
     public void testDeleteReservation() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                timeProvider.getTime());
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
-        Reservation travelReservation = new Reservation(user, travel, LocalDateTime.of(2021, 8, 19, 14, 10));
+        Reservation travelReservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
+        Reservation skyReservation = new Reservation(null, user, null, travelSky,
+                TravelType.SKY_TRAVEL, HotelStandard.FOUR, MealStandard.AS_SKY_HOTEL_PROVIDES,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(travelReservation);
-        Reservation skyReservation = new Reservation(user, travelSky, LocalDateTime.of(2021, 8, 19, 14, 10));
         reservationDao.save(skyReservation);
 
         //when
@@ -191,23 +215,25 @@ public class ReservationTestSuite {
     @Test
     public void testRelationsWithEntities() throws Exception {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        TravelSky travelSky = new TravelSky("Warsaw", "Boston",
+        TravelSky travelSky = new TravelSky(null, "Warsaw", "Boston",
                 LocalDateTime.of(2021, 11, 7, 21, 10),
                 LocalDateTime.of(2021, 11, 27, 21, 10),
-                HotelStandard.FOUR,
-                timeProvider.getTime());
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelSkyDao.save(travelSky);
-        Reservation travelReservation = new Reservation(user, travel, LocalDateTime.of(2021, 8, 19, 14, 10));
+        Reservation travelReservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
+        Reservation skyReservation = new Reservation(null, user, null, travelSky,
+                TravelType.SKY_TRAVEL, HotelStandard.FOUR, MealStandard.AS_SKY_HOTEL_PROVIDES,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(travelReservation);
-        Reservation skyReservation = new Reservation(user, travelSky, LocalDateTime.of(2021, 8, 19, 14, 10));
         reservationDao.save(skyReservation);
 
         //when

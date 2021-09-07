@@ -1,6 +1,7 @@
 package com.kodilla.travelagencybe.domain;
 
 import com.kodilla.travelagencybe.enums.Status;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "COMPLAINTS")
 public class Complaint {
 
@@ -34,17 +36,9 @@ public class Complaint {
     private LocalDateTime closingDate;
 
     @OneToOne(mappedBy = "complaint")
-    @JoinColumn(name = "COMPLAINT_ANSWER_ID")
     private ComplaintAnswer complaintAnswer;
 
     @Column(name = "STATUS")
     @NotNull
     private Status status;
-
-    public Complaint(@NotNull Reservation reservation, @NotNull String description, @NotNull LocalDateTime creationDate) {
-        this.reservation = reservation;
-        this.description = description;
-        this.creationDate = creationDate;
-        this.status = Status.OPENED;
-    }
 }

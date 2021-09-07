@@ -1,7 +1,7 @@
 package com.kodilla.travelagencybe.domain;
 
-import com.kodilla.travelagencybe.enums.HotelStandard;
 import com.kodilla.travelagencybe.enums.Status;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +13,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "TRAVELS_SKY")
 public class TravelSky {
 
@@ -36,10 +37,6 @@ public class TravelSky {
     @NotNull
     private LocalDateTime returnDate;
 
-    @Column(name = "HOTEL_STANDARD")
-    @NotNull
-    private HotelStandard hotelStandard;
-
     @Column(name = "STATUS")
     @NotNull
     private Status status;
@@ -54,16 +51,4 @@ public class TravelSky {
             fetch = FetchType.EAGER
     )
     private List<Reservation> listOfReservations = new ArrayList<>();
-
-    public TravelSky(@NotNull String origin, @NotNull String destination, @NotNull LocalDateTime departureDate,
-                  @NotNull LocalDateTime returnDate, @NotNull HotelStandard hotelStandard,
-                  @NotNull LocalDateTime creationDate) {
-        this.origin = origin;
-        this.destination = destination;
-        this.departureDate = departureDate;
-        this.returnDate = returnDate;
-        this.hotelStandard = hotelStandard;
-        this.creationDate = creationDate;
-        this.status = Status.OPENED;
-    }
 }

@@ -2,6 +2,7 @@ package com.kodilla.travelagencybe.domain;
 
 import com.kodilla.travelagencybe.enums.HotelStandard;
 import com.kodilla.travelagencybe.enums.MealStandard;
+import com.kodilla.travelagencybe.enums.Status;
 import com.kodilla.travelagencybe.enums.TravelType;
 import com.kodilla.travelagencybe.exception.ComplaintAnswerNotFoundException;
 import com.kodilla.travelagencybe.exception.ComplaintNotFoundException;
@@ -12,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,19 +53,21 @@ public class ComplaintAnswerTestSuite {
     @Test
     public void testCreateComplaintAnswer() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(reservation, "complaint description", timeProvider.getTime());
-        complaintDao.save(compliant);
-        ComplaintAnswer compliantAnswer = new ComplaintAnswer(compliant, "answer", timeProvider.getTime());
+        Complaint complaint = new Complaint(null, reservation, "compliant description",
+                timeProvider.getTime(),null, null, Status.OPENED);
+        complaintDao.save(complaint);
+        ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", timeProvider.getTime());
 
         //when
         ComplaintAnswer savedCompliantAnswer = complaintAnswerDao.save(compliantAnswer);
@@ -74,19 +79,21 @@ public class ComplaintAnswerTestSuite {
     @Test
     public void testReadComplaintAnswer() throws Exception {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint complaint = new Complaint(reservation, "complaint description", timeProvider.getTime());
+        Complaint complaint = new Complaint(null, reservation, "compliant description",
+                timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(complaint);
-        ComplaintAnswer compliantAnswer = new ComplaintAnswer(complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
+        ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
 
         //when
@@ -101,19 +108,21 @@ public class ComplaintAnswerTestSuite {
     @Test
     public void testUpdateComplaintAnswer() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint complaint = new Complaint(reservation, "complaint description", timeProvider.getTime());
+        Complaint complaint = new Complaint(null, reservation, "compliant description",
+                timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(complaint);
-        ComplaintAnswer compliantAnswer = new ComplaintAnswer(complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
+        ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
 
         //when
@@ -129,19 +138,21 @@ public class ComplaintAnswerTestSuite {
     @Test
     public void testDeleteComplaintAnswer() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint complaint = new Complaint(reservation, "complaint description", timeProvider.getTime());
+        Complaint complaint = new Complaint(null, reservation, "compliant description",
+                timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(complaint);
-        ComplaintAnswer compliantAnswer = new ComplaintAnswer(complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
+        ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
 
         //when
@@ -155,19 +166,21 @@ public class ComplaintAnswerTestSuite {
     @Test
     public void testRelationWithComplaint() throws Exception {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                timeProvider.getTime());
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
-        Reservation reservation = new Reservation(user, travel, timeProvider.getTime());
+        Reservation reservation = new Reservation(null, user, travel, null,
+                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
+                null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint complaint = new Complaint(reservation, "complaint description", timeProvider.getTime());
+        Complaint complaint = new Complaint(null, reservation, "compliant description",
+                timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(complaint);
-        ComplaintAnswer compliantAnswer = new ComplaintAnswer(complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
+        ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
 
         //when

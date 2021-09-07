@@ -1,15 +1,16 @@
 package com.kodilla.travelagencybe.domain;
 
-import com.kodilla.travelagencybe.enums.HotelStandard;
-import com.kodilla.travelagencybe.enums.MealStandard;
-import com.kodilla.travelagencybe.enums.TravelType;
+import com.kodilla.travelagencybe.enums.Status;
 import com.kodilla.travelagencybe.exception.TravelNotFoundException;
 import com.kodilla.travelagencybe.repository.TravelDao;
+import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,14 +21,16 @@ public class TravelTestSuite {
     @Autowired
     TravelDao travelDao;
 
+    @Autowired
+    TimeProvider timeProvider;
+
     @Test
     public void testCreateTravel() {
         //given
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
 
         //when
         Travel savedTravel = travelDao.save(travel);
@@ -42,11 +45,10 @@ public class TravelTestSuite {
     @Test
     public void testReadTravel() throws Exception {
         //given
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED,  LocalDateTime.of(2021, 8, 19, 14, 10), new ArrayList<>());
         travelDao.save(travel);
 
         //when
@@ -55,11 +57,8 @@ public class TravelTestSuite {
         //then
         assertEquals("Warsaw", travelFromDb.getOrigin());
         assertEquals("Boston", travelFromDb.getDestination());
-        assertEquals(LocalDateTime.of(2021, 11, 7, 21, 10), travelFromDb.getDepartureDate());
-        assertEquals(LocalDateTime.of(2021, 11, 27, 21, 10), travelFromDb.getReturnDate());
-        assertEquals(TravelType.BASIC, travelFromDb.getTravelType());
-        assertEquals(HotelStandard.FOUR, travelFromDb.getHotelStandard());
-        assertEquals(MealStandard.ALL_INCLUSIVE_ALC_FREE, travelFromDb.getMealStandard());
+        assertEquals(LocalDate.of(2021, 11, 7), travelFromDb.getDepartureDate());
+        assertEquals(LocalDate.of(2021, 11, 27), travelFromDb.getReturnDate());
         assertEquals(LocalDateTime.of(2021, 8, 19, 14, 10), travelFromDb.getCreationDate());
 
         //clean
@@ -69,27 +68,20 @@ public class TravelTestSuite {
     @Test
     public void testUpdateTravel() {
         //given
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
 
         //when
         travel.setOrigin("Wroclaw");
         travel.setDestination("Paris");
-        travel.setTravelType(TravelType.SIGHTSEEING);
-        travel.setHotelStandard(HotelStandard.ONE);
-        travel.setMealStandard(MealStandard.ALL_INCLUSIVE);
         Travel updatedTravel = travelDao.save(travel);
 
         //then
         assertEquals("Wroclaw", updatedTravel.getOrigin());
         assertEquals("Paris", updatedTravel.getDestination());
-        assertEquals(TravelType.SIGHTSEEING, updatedTravel.getTravelType());
-        assertEquals(HotelStandard.ONE, updatedTravel.getHotelStandard());
-        assertEquals(MealStandard.ALL_INCLUSIVE, updatedTravel.getMealStandard());
 
         //clean
         travelDao.deleteAll();
@@ -98,11 +90,10 @@ public class TravelTestSuite {
     @Test
     public void testDeleteTravel() {
         //given
-        Travel travel = new Travel("Warsaw", "Boston",
-                LocalDateTime.of(2021, 11, 7, 21, 10),
-                LocalDateTime.of(2021, 11, 27, 21, 10),
-                TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE_ALC_FREE,
-                LocalDateTime.of(2021, 8, 19, 14, 10));
+        Travel travel = new Travel(null, "Warsaw", "Boston",
+                LocalDate.of(2021, 11, 7),
+                LocalDate.of(2021, 11, 27),
+                Status.OPENED, timeProvider.getTime(), new ArrayList<>());
         travelDao.save(travel);
 
         //when

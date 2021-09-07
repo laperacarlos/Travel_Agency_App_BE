@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,13 +25,15 @@ public class UserTestSuite {
     @Test
     public void testCreateUser() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
 
         //when
         User savedUser = userDao.save(user);
+        Long id = savedUser.getId();
 
         //then
-        assertNotEquals(0L, savedUser.getId());
+        assertNotNull(id);
+        assertNotEquals(0L, id);
 
         //clean
         userDao.deleteAll();
@@ -40,7 +43,7 @@ public class UserTestSuite {
     public void testReadUser() throws Exception {
         //given
         LocalDateTime creationTime = timeProvider.getTime();
-        User user = new User("username", "email@com", creationTime);
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         User savedUser = userDao.save(user);
 
         //when
@@ -60,7 +63,7 @@ public class UserTestSuite {
     @Test
     public void testUpdateUser() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
 
         //when
@@ -77,7 +80,7 @@ public class UserTestSuite {
     @Test
     public void testDeleteUser() {
         //given
-        User user = new User("username", "email@com", timeProvider.getTime());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
         userDao.save(user);
 
         //when

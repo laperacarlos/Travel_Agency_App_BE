@@ -1,5 +1,6 @@
 package com.kodilla.travelagencybe.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "USERS")
 public class User {
 
@@ -44,19 +46,4 @@ public class User {
             fetch = FetchType.EAGER
     )
     private List<Reservation> listOfReservations = new ArrayList<>();
-
-    public User(@NotNull String username, @NotNull String email, @NotNull LocalDateTime creationDate) {
-        this.username = username;
-        this.email = email;
-        this.creationDate = creationDate;
-        this.isActive = true;
-    }
-
-    public User(@NotNull String username, @NotNull String email, @NotNull LocalDateTime creationDate, @NotNull boolean isAdministrator) {
-        this.username = username;
-        this.email = email;
-        this.creationDate = creationDate;
-        this.isAdministrator = isAdministrator;
-        this.isActive = true;
-    }
 }
