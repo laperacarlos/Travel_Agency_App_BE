@@ -60,7 +60,7 @@ public class ComplaintTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(null, reservation, "compliant description",
+        Complaint compliant = new Complaint(null, reservation, "complaint description",
                 timeProvider.getTime(),null, null, Status.OPENED);
         //when
         Complaint savedCompliant = complaintDao.save(compliant);
@@ -83,7 +83,7 @@ public class ComplaintTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(null, reservation, "compliant description",
+        Complaint compliant = new Complaint(null, reservation, "complaint description",
                 LocalDateTime.of(2021, 11, 27, 21, 10),null, null, Status.OPENED);
         complaintDao.save(compliant);
 
@@ -92,7 +92,7 @@ public class ComplaintTestSuite {
 
         //then
         assertEquals(reservation.getId(), compliantFromDb.getReservation().getId());
-        assertEquals("compliant description", compliantFromDb.getDescription());
+        assertEquals("complaint description", compliantFromDb.getDescription());
         assertEquals(LocalDateTime.of(2021, 11, 27, 21, 10), compliantFromDb.getCreationDate());
         assertEquals(Status.OPENED, compliantFromDb.getStatus());
         assertNull(compliantFromDb.getClosingDate());
@@ -112,7 +112,7 @@ public class ComplaintTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(null, reservation, "compliant description",
+        Complaint compliant = new Complaint(null, reservation, "complaint description",
                 timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(compliant);
 
@@ -142,7 +142,7 @@ public class ComplaintTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(null, reservation, "compliant description",
+        Complaint compliant = new Complaint(null, reservation, "complaint description",
                 timeProvider.getTime(),null, null, Status.OPENED);
         complaintDao.save(compliant);
 
@@ -168,7 +168,7 @@ public class ComplaintTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
-        Complaint compliant = new Complaint(null, reservation, "compliant description",
+        Complaint compliant = new Complaint(null, reservation, "complaint description",
                 LocalDateTime.of(2021, 11, 27, 21, 10),null, null, Status.OPENED);
         complaintDao.save(compliant);
 
@@ -177,7 +177,7 @@ public class ComplaintTestSuite {
 
         //then
         assertEquals(compliant.getId(), reservationComplaint.getId());
-        assertEquals("compliant description", reservationComplaint.getDescription());
+        assertEquals("complaint description", reservationComplaint.getDescription());
         assertEquals(LocalDateTime.of(2021, 11, 27, 21, 10), reservationComplaint.getCreationDate());
         assertEquals(Status.OPENED, reservationComplaint.getStatus());
         assertNull(reservationComplaint.getClosingDate());

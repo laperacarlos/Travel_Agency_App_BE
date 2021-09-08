@@ -5,7 +5,6 @@ import com.kodilla.travelagencybe.repository.ComplaintAnswerDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +21,7 @@ public class ComplaintAnswerService {
         return complaintAnswerDao.findById(id);
     }
 
-    public List<ComplaintAnswer> getAllAnswers() {
-        return complaintAnswerDao.findAll();
+    public void deleteById(final Long id) {
+        complaintAnswerDao.deleteById(id);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/travelAgencyBe")
+@RequestMapping("/travelAgencyBe/v1")
 @RequiredArgsConstructor
 public class UserController {
     private final UserMapper userMapper;
@@ -22,10 +22,18 @@ public class UserController {
     private final TimeProvider timeProvider;
 
     @PostMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createUser(@RequestBody UserDto userDto) {
+    public User createUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
         user.setCreationDate(timeProvider.getTime());
-        userService.saveUser(user);
+        return userService.saveUser(user);
+    }
+
+    @PutMapping(value = "users")
+    public void updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
+        if(userService.getUserById(userDto.getId()).isPresent()) {
+            userService.saveUser(userMapper.mapToUser(userDto));
+        } else throw new UserNotFoundException(userDto.getId());
+
     }
 
     @PutMapping(value = "users/{id}")

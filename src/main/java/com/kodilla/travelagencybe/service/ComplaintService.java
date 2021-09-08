@@ -5,7 +5,6 @@ import com.kodilla.travelagencybe.repository.ComplaintDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,9 +19,5 @@ public class ComplaintService {
 
     public Optional<Complaint> getComplaintById(final Long id) {
         return complaintDao.findById(id);
-    }
-
-    public List<Complaint> getAllComplaints() {
-        return complaintDao.findAll();
     }
 }
