@@ -5,7 +5,6 @@ import com.kodilla.travelagencybe.domain.UserDto;
 import com.kodilla.travelagencybe.exception.UserNotFoundException;
 import com.kodilla.travelagencybe.mapper.UserMapper;
 import com.kodilla.travelagencybe.service.UserService;
-import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +18,17 @@ import java.util.List;
 public class UserController {
     private final UserMapper userMapper;
     private final UserService userService;
-    private final TimeProvider timeProvider;
 
     @PostMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User createUser(@RequestBody UserDto userDto) {
+    public UserDto createUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
-        user.setCreationDate(timeProvider.getTime());
-        return userService.saveUser(user);
+        return userMapper.mapToUserDto(userService.saveNewUser(user));
     }
 
     @PutMapping(value = "users")
-    public void updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
+    public UserDto updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
         if(userService.getUserById(userDto.getId()).isPresent()) {
-            userService.saveUser(userMapper.mapToUser(userDto));
+            return userMapper.mapToUserDto(userService.saveUser(userMapper.mapToUser(userDto)));
         } else throw new UserNotFoundException(userDto.getId());
 
     }

@@ -3,6 +3,7 @@ package com.kodilla.travelagencybe.service;
 import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.exception.UserNotFoundException;
 import com.kodilla.travelagencybe.repository.UserDao;
+import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,16 +27,22 @@ public class UserServiceTestSuite {
     @Mock
     private UserDao userDao;
 
+    @Mock
+    private TimeProvider timeProvider;
+
     @Test
     void createUser() {
         //given
-        User user = new User(null, "username", "email@com", LocalDateTime.now(), true, false, new ArrayList<>());
-        User savedUser = new User(1L, "username", "email@com", LocalDateTime.now(), true, false, new ArrayList<>());
+        LocalDateTime dateTime = timeProvider.getTime();
 
+        User user = new User(null, "username", "email@com", dateTime, true, false, new ArrayList<>());
+        User savedUser = new User(1L, "username", "email@com", dateTime, true, false, new ArrayList<>());
+
+        when(timeProvider.getTime()).thenReturn(dateTime);
         when(userDao.save(user)).thenReturn(savedUser);
 
         //when
-        User newUser = userService.saveUser(user);
+        User newUser = userService.saveNewUser(user);
 
         //then
         assertEquals(1L, newUser.getId());

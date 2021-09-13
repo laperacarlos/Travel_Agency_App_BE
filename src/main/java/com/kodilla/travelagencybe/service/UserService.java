@@ -2,6 +2,7 @@ package com.kodilla.travelagencybe.service;
 
 import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.repository.UserDao;
+import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserDao userDao;
+    private final TimeProvider timeProvider;
+
+    public User saveNewUser(final User user){
+        user.setCreationDate(timeProvider.getTime());
+        return userDao.save(user);
+    }
 
     public User saveUser(final User user){
         return userDao.save(user);
