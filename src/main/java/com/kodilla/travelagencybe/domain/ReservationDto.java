@@ -15,7 +15,6 @@ public class ReservationDto {
     private final Long id;
     private final User user;
     private final Travel travel;
-    private final TravelSky travelSky;
     private final TravelType travelType;
     private final HotelStandard hotelStandard;
     private final MealStandard mealStandard;

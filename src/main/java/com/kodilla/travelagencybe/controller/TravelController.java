@@ -24,10 +24,10 @@ public class TravelController {
     private final TimeProvider timeProvider;
 
     @PostMapping(value = "travels", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createTravel(@RequestBody TravelDto travelDto) {
+    public TravelDto createTravel(@RequestBody TravelDto travelDto) {
         Travel travel = travelMapper.mapToTravel(travelDto);
         travel.setCreationDate(timeProvider.getTime());
-        travelService.saveTravel(travel);
+        return travelMapper.mapToTravelDto(travelService.saveTravel(travel));
     }
 
     @PutMapping(value = "travels")

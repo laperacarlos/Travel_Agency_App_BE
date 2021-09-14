@@ -31,10 +31,6 @@ public class Reservation {
     @JoinColumn(name = "TRAVEL_ID")
     private Travel travel;
 
-    @ManyToOne
-    @JoinColumn(name = "TRAVEL_SKY_ID")
-    private TravelSky travelSky;
-
     @Column(name = "TRAVEL_TYPE")
     @NotNull
     private TravelType travelType;

@@ -1,10 +1,7 @@
 package com.kodilla.travelagencybe.mapper;
 
 import com.kodilla.travelagencybe.domain.*;
-import com.kodilla.travelagencybe.enums.HotelStandard;
-import com.kodilla.travelagencybe.enums.MealStandard;
-import com.kodilla.travelagencybe.enums.Status;
-import com.kodilla.travelagencybe.enums.TravelType;
+import com.kodilla.travelagencybe.enums.*;
 import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +25,12 @@ public class ComplaintMapperTestSuite {
     @Test
     void testMapToComplaint() {
         //given
-        User user = new User(2L, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(2L, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Travel travel = new Travel(2L, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
                 Status.OPENED, timeProvider.getTime(), new ArrayList<>());
-        Reservation reservation = new Reservation(2L, user, travel, null,
+        Reservation reservation = new Reservation(2L, user, travel,
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         ComplaintDto complaintDto = new ComplaintDto(1L, reservation, "complaint description",
@@ -55,12 +52,12 @@ public class ComplaintMapperTestSuite {
     @Test
     void testMapToComplaintDto() {
         //given
-        User user = new User(2L, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(2L, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Travel travel = new Travel(2L, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
                 Status.OPENED, timeProvider.getTime(), new ArrayList<>());
-        Reservation reservation = new Reservation(2L, user, travel, null,
+        Reservation reservation = new Reservation(2L, user, travel,
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",

@@ -1,10 +1,7 @@
 package com.kodilla.travelagencybe.mapper;
 
 import com.kodilla.travelagencybe.domain.*;
-import com.kodilla.travelagencybe.enums.HotelStandard;
-import com.kodilla.travelagencybe.enums.MealStandard;
-import com.kodilla.travelagencybe.enums.Status;
-import com.kodilla.travelagencybe.enums.TravelType;
+import com.kodilla.travelagencybe.enums.*;
 import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +26,12 @@ public class ReservationMapperTestSuite {
     @Test
     void mapToReservation() {
         //given
-        User user = new User(2L, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(2L, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Travel travel = new Travel(2L, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
                 Status.OPENED, timeProvider.getTime(), new ArrayList<>());
-        ReservationDto reservationDto = new ReservationDto(1L, user, travel, null,
+        ReservationDto reservationDto = new ReservationDto(1L, user, travel,
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2021, 8, 19, 14, 10), Status.OPENED);
 
@@ -45,7 +42,6 @@ public class ReservationMapperTestSuite {
         assertEquals(1L, reservation.getId());
         assertEquals(2L, reservation.getUser().getId());
         assertEquals(2L, reservation.getTravel().getId());
-        assertNull(reservation.getTravelSky());
         assertEquals(TravelType.BASIC, reservation.getTravelType());
         assertEquals(HotelStandard.FOUR, reservation.getHotelStandard());
         assertEquals(MealStandard.ALL_INCLUSIVE, reservation.getMealStandard());
@@ -57,12 +53,12 @@ public class ReservationMapperTestSuite {
     @Test
     void mapToReservationDto() {
         //given
-        User user = new User(2L, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(2L, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Travel travel = new Travel(2L, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
                 Status.OPENED, timeProvider.getTime(), new ArrayList<>());
-        Reservation reservation = new Reservation(1L, user, travel, null,
+        Reservation reservation = new Reservation(1L, user, travel,
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2021, 8, 19, 14, 10), Status.OPENED);
 
@@ -73,7 +69,6 @@ public class ReservationMapperTestSuite {
         assertEquals(1L, reservationDto.getId());
         assertEquals(2L, reservationDto.getUser().getId());
         assertEquals(2L, reservationDto.getTravel().getId());
-        assertNull(reservationDto.getTravelSky());
         assertEquals(TravelType.BASIC, reservationDto.getTravelType());
         assertEquals(HotelStandard.FOUR, reservationDto.getHotelStandard());
         assertEquals(MealStandard.ALL_INCLUSIVE, reservationDto.getMealStandard());
@@ -85,12 +80,12 @@ public class ReservationMapperTestSuite {
     @Test
     void mapToReservationDtoList() {
         //given
-        User user = new User(2L, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(2L, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Travel travel = new Travel(2L, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
                 Status.OPENED, timeProvider.getTime(), new ArrayList<>());
-        List<Reservation> reservationList = List.of(new Reservation(1L, user, travel, null,
+        List<Reservation> reservationList = List.of(new Reservation(1L, user, travel,
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2021, 8, 19, 14, 10), Status.OPENED));
 

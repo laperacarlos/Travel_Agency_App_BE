@@ -2,6 +2,7 @@ package com.kodilla.travelagencybe.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kodilla.travelagencybe.enums.UserStatus;
 import com.kodilla.travelagencybe.gson.LocalDateTimeSerializer;
 import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.domain.UserDto;
@@ -45,8 +46,8 @@ public class UserControllerTestSuite {
     @Test
     void shouldGetListOfAllUsers() throws Exception{
         //given
-        List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>()));
-        List<UserDto> mappedUserList = List.of(new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>()));
+        List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>()));
+        List<UserDto> mappedUserList = List.of(new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>()));
 
         when(userService.getAllUsers()).thenReturn(userList);
         when(userMapper.mapToUserDtoList(userList)).thenReturn(mappedUserList);
@@ -63,16 +64,16 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].username", Matchers.is("username")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].email", Matchers.is("email@com")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].creationDate", Matchers.is("2020-11-07T07:07:00")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].active", Matchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].administrator", Matchers.is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].isActive", Matchers.is("YES")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].isAdministrator", Matchers.is("NO")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].listOfReservations", Matchers.hasSize(0)));
     }
 
     @Test
     void shouldCreateUser() throws Exception{
         //given
-        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>());
-        UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>());
+        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
+        UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         when(userMapper.mapToUser(userDto)).thenReturn(user);
         when(userMapper.mapToUserDto(userService.saveUser(user))).thenReturn(userDto);
@@ -95,16 +96,16 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is("username")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("email@com")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Matchers.is("2020-11-07T07:07:00")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.active", Matchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.administrator", Matchers.is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isActive", Matchers.is("YES")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isAdministrator", Matchers.is("NO")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.listOfReservations", Matchers.hasSize(0)));
     }
 
     @Test
     void shouldUpdateUser() throws Exception{
         //given
-        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>());
-        UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>());
+        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
+        UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         when(userMapper.mapToUser(userDto)).thenReturn(user);
         when(userService.getUserById(userDto.getId())).thenReturn(Optional.of(user));
@@ -128,15 +129,15 @@ public class UserControllerTestSuite {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is("username")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("email@com")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Matchers.is("2020-11-07T07:07:00")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.active", Matchers.is(true)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.administrator", Matchers.is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isActive", Matchers.is("YES")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isAdministrator", Matchers.is("NO")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.listOfReservations", Matchers.hasSize(0)));
     }
 
     @Test
     void shouldDeleteUser() throws Exception{
         //given
-        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), true, false, new ArrayList<>());
+        User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         when(userService.getUserById(anyLong())).thenReturn(Optional.of(user));
         when(userService.saveUser(user)).thenReturn(user);

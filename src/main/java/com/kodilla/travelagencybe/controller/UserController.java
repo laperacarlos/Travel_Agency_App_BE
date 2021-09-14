@@ -36,8 +36,7 @@ public class UserController {
     @PutMapping(value = "users/{id}")
     public void deleteUser(@PathVariable Long id) throws UserNotFoundException {
         User user = userService.getUserById(id).orElseThrow(() -> new UserNotFoundException(id));
-        user.setActive(false);
-        userService.saveUser(user);
+        userService.deleteUser(user);
     }
 
     @GetMapping(value = "users")

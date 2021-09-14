@@ -16,8 +16,8 @@ public class UserMapper {
                 userDto.getUsername(),
                 userDto.getEmail(),
                 userDto.getCreationDate(),
-                userDto.isActive(),
-                userDto.isAdministrator(),
+                userDto.getIsActive(),
+                userDto.getIsAdministrator(),
                 userDto.getListOfReservations()
         );
     }
@@ -28,8 +28,8 @@ public class UserMapper {
                 user.getUsername(),
                 user.getEmail(),
                 user.getCreationDate(),
-                user.isActive(),
-                user.isAdministrator(),
+                user.getIsActive(),
+                user.getIsAdministrator(),
                 user.getListOfReservations()
         );
     }

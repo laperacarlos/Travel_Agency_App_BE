@@ -1,6 +1,7 @@
 package com.kodilla.travelagencybe.service;
 
 import com.kodilla.travelagencybe.domain.User;
+import com.kodilla.travelagencybe.enums.UserStatus;
 import com.kodilla.travelagencybe.repository.UserDao;
 import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,11 @@ public class UserService {
     public User saveNewUser(final User user){
         user.setCreationDate(timeProvider.getTime());
         return userDao.save(user);
+    }
+
+    public void deleteUser(final User user) {
+        user.setIsActive(UserStatus.NO);
+        userDao.save(user);
     }
 
     public User saveUser(final User user){

@@ -2,6 +2,7 @@ package com.kodilla.travelagencybe.mapper;
 
 import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.domain.UserDto;
+import com.kodilla.travelagencybe.enums.UserStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +23,7 @@ public class UserMapperTestSuite {
     void testMapToUser() {
         //given
         UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7),
-                true, false, new ArrayList<>());
+                UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         //when
         User user = userMapper.mapToUser(userDto);
@@ -32,8 +33,8 @@ public class UserMapperTestSuite {
         assertEquals("username", user.getUsername());
         assertEquals("email@com", user.getEmail());
         assertEquals(LocalDateTime.of(2020, 11, 7, 7, 7), user.getCreationDate());
-        assertTrue(user.isActive());
-        assertFalse(user.isAdministrator());
+        assertEquals(UserStatus.YES, user.getIsActive());
+        assertEquals(UserStatus.NO, user.getIsAdministrator());
         assertEquals(0, user.getListOfReservations().size());
     }
 
@@ -41,7 +42,7 @@ public class UserMapperTestSuite {
     void testMapToUserDto() {
         //given
         User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7),
-                true, false, new ArrayList<>());
+                UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         //when
         UserDto userDto = userMapper.mapToUserDto(user);
@@ -51,8 +52,8 @@ public class UserMapperTestSuite {
         assertEquals("username", userDto.getUsername());
         assertEquals("email@com", userDto.getEmail());
         assertEquals(LocalDateTime.of(2020, 11, 7, 7, 7), userDto.getCreationDate());
-        assertTrue(userDto.isActive());
-        assertFalse(userDto.isAdministrator());
+        assertEquals(UserStatus.YES, userDto.getIsActive());
+        assertEquals(UserStatus.NO, userDto.getIsAdministrator());
         assertEquals(0, userDto.getListOfReservations().size());
     }
 
@@ -60,7 +61,7 @@ public class UserMapperTestSuite {
     void testMapToUserDtoList() {
         //given
         List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7),
-                true, false, new ArrayList<>()));
+                UserStatus.YES, UserStatus.NO, new ArrayList<>()));
 
         //when
         List<UserDto> userDtoList = userMapper.mapToUserDtoList(userList);

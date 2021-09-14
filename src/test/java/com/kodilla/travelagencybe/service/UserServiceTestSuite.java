@@ -1,6 +1,7 @@
 package com.kodilla.travelagencybe.service;
 
 import com.kodilla.travelagencybe.domain.User;
+import com.kodilla.travelagencybe.enums.UserStatus;
 import com.kodilla.travelagencybe.exception.UserNotFoundException;
 import com.kodilla.travelagencybe.repository.UserDao;
 import com.kodilla.travelagencybe.utility.TimeProvider;
@@ -35,8 +36,8 @@ public class UserServiceTestSuite {
         //given
         LocalDateTime dateTime = timeProvider.getTime();
 
-        User user = new User(null, "username", "email@com", dateTime, true, false, new ArrayList<>());
-        User savedUser = new User(1L, "username", "email@com", dateTime, true, false, new ArrayList<>());
+        User user = new User(null, "username", "email@com", dateTime, UserStatus.YES, UserStatus.NO, new ArrayList<>());
+        User savedUser = new User(1L, "username", "email@com", dateTime, UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         when(timeProvider.getTime()).thenReturn(dateTime);
         when(userDao.save(user)).thenReturn(savedUser);
@@ -51,7 +52,7 @@ public class UserServiceTestSuite {
     @Test
     void getUserById() throws UserNotFoundException {
         //given
-        User savedUser = new User(1L, "username", "email@com", LocalDateTime.now(), true, false, new ArrayList<>());
+        User savedUser = new User(1L, "username", "email@com", LocalDateTime.now(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         Optional<User> optUser = Optional.of(savedUser);
 
         when(userDao.findById(savedUser.getId())).thenReturn(optUser);
@@ -66,7 +67,7 @@ public class UserServiceTestSuite {
     @Test
     void getAllUsers() {
         //given
-        List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.now(), true, false, new ArrayList<>()));
+        List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.now(), UserStatus.YES, UserStatus.NO, new ArrayList<>()));
 
         when(userDao.findAll()).thenReturn(userList);
 
@@ -76,5 +77,4 @@ public class UserServiceTestSuite {
         //then
         assertEquals(1, list.size());
     }
-
 }

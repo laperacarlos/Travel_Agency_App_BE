@@ -1,5 +1,6 @@
 package com.kodilla.travelagencybe.domain;
 
+import com.kodilla.travelagencybe.enums.UserStatus;
 import com.kodilla.travelagencybe.exception.UserNotFoundException;
 import com.kodilla.travelagencybe.repository.UserDao;
 import com.kodilla.travelagencybe.utility.TimeProvider;
@@ -25,7 +26,7 @@ public class UserTestSuite {
     @Test
     public void testCreateUser() {
         //given
-        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
 
         //when
         User savedUser = userDao.save(user);
@@ -43,7 +44,7 @@ public class UserTestSuite {
     public void testReadUser() throws Exception {
         //given
         LocalDateTime creationTime = timeProvider.getTime();
-        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         User savedUser = userDao.save(user);
 
         //when
@@ -53,8 +54,8 @@ public class UserTestSuite {
         assertEquals("username", userFromDb.getUsername());
         assertEquals("email@com", userFromDb.getEmail());
         assertEquals(creationTime, userFromDb.getCreationDate());
-        assertTrue(userFromDb.isActive());
-        assertFalse(userFromDb.isAdministrator());
+        assertEquals(UserStatus.YES, userFromDb.getIsActive());
+        assertEquals(UserStatus.NO, userFromDb.getIsAdministrator());
 
         //clean
         userDao.deleteAll();
@@ -63,7 +64,7 @@ public class UserTestSuite {
     @Test
     public void testUpdateUser() {
         //given
-        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         userDao.save(user);
 
         //when
@@ -80,7 +81,7 @@ public class UserTestSuite {
     @Test
     public void testDeleteUser() {
         //given
-        User user = new User(null, "username", "email@com", timeProvider.getTime(), true, false, new ArrayList<>());
+        User user = new User(null, "username", "email@com", timeProvider.getTime(), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         userDao.save(user);
 
         //when

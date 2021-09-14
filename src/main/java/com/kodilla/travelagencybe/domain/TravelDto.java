@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class TravelDto {
-
     private final Long id;
     private final String origin;
     private final String destination;

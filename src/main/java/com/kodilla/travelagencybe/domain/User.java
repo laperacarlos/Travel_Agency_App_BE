@@ -1,5 +1,6 @@
 package com.kodilla.travelagencybe.domain;
 
+import com.kodilla.travelagencybe.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,11 +35,11 @@ public class User {
 
     @Column(name = "ACTIVE")
     @NotNull
-    private boolean isActive;
+    private UserStatus isActive;
 
     @Column(name = "ADMINISTRATOR")
     @NotNull
-    private boolean isAdministrator;
+    private UserStatus isAdministrator;
 
     @OneToMany(
             targetEntity = Reservation.class,
