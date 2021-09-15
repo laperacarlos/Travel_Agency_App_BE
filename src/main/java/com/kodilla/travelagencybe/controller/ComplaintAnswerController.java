@@ -5,7 +5,6 @@ import com.kodilla.travelagencybe.domain.ComplaintAnswerDto;
 import com.kodilla.travelagencybe.exception.ComplaintAnswerNotFoundException;
 import com.kodilla.travelagencybe.mapper.ComplaintAnswerMapper;
 import com.kodilla.travelagencybe.service.ComplaintAnswerService;
-import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class ComplaintAnswerController {
     private final ComplaintAnswerService complaintAnswerService;
     private final ComplaintAnswerMapper complaintAnswerMapper;
-    private final TimeProvider timeProvider;
 
     @PostMapping(value = "complaints/answers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createComplaintAnswer(@RequestBody ComplaintAnswerDto complaintAnswerDto) {
+    public ComplaintAnswerDto createComplaintAnswer(@RequestBody ComplaintAnswerDto complaintAnswerDto) {
         ComplaintAnswer complaintAnswer = complaintAnswerMapper.mapToComplaintAnswer(complaintAnswerDto);
-        complaintAnswer.setCreationDate(timeProvider.getTime());
-        complaintAnswerService.saveAnswer(complaintAnswer);
+        return complaintAnswerMapper.mapToComplaintAnswerDto(complaintAnswerService.saveNewAnswer(complaintAnswer));
     }
 
     @PutMapping(value = "complaints/answers")

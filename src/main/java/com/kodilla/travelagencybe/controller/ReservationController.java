@@ -7,7 +7,6 @@ import com.kodilla.travelagencybe.exception.UserNotFoundException;
 import com.kodilla.travelagencybe.mapper.ReservationMapper;
 import com.kodilla.travelagencybe.service.ReservationService;
 import com.kodilla.travelagencybe.service.UserService;
-import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +21,11 @@ public class ReservationController {
     private final ReservationMapper reservationMapper;
     private final ReservationService reservationService;
     private final UserService userService;
-    private final TimeProvider timeProvider;
 
     @PostMapping(value = "reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createReservation (@RequestBody ReservationDto reservationDto) {
+    public ReservationDto createReservation (@RequestBody ReservationDto reservationDto) {
         Reservation reservation = reservationMapper.mapToReservation(reservationDto);
-        reservation.setCreationDate(timeProvider.getTime());
-        reservationService.saveReservation(reservation);
+        return reservationMapper.mapToReservationDto(reservationService.saveNewReservation(reservation));
     }
 
     @PutMapping(value = "reservations")

@@ -1,5 +1,6 @@
 package com.kodilla.travelagencybe.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kodilla.travelagencybe.enums.HotelStandard;
 import com.kodilla.travelagencybe.enums.MealStandard;
 import com.kodilla.travelagencybe.enums.Status;
@@ -23,11 +24,13 @@ public class Reservation {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @NotNull
     @JoinColumn(name = "USER_ID")
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "TRAVEL_ID")
     private Travel travel;
 

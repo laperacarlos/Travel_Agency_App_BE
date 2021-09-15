@@ -2,17 +2,14 @@ package com.kodilla.travelagencybe.controller;
 
 import com.kodilla.travelagencybe.domain.Travel;
 import com.kodilla.travelagencybe.domain.TravelDto;
-import com.kodilla.travelagencybe.enums.Status;
 import com.kodilla.travelagencybe.exception.TravelNotFoundException;
 import com.kodilla.travelagencybe.mapper.TravelMapper;
 import com.kodilla.travelagencybe.service.TravelService;
-import com.kodilla.travelagencybe.utility.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -21,13 +18,11 @@ import java.util.stream.Collectors;
 public class TravelController {
     private final TravelMapper travelMapper;
     private final TravelService travelService;
-    private final TimeProvider timeProvider;
 
     @PostMapping(value = "travels", consumes = MediaType.APPLICATION_JSON_VALUE)
     public TravelDto createTravel(@RequestBody TravelDto travelDto) {
         Travel travel = travelMapper.mapToTravel(travelDto);
-        travel.setCreationDate(timeProvider.getTime());
-        return travelMapper.mapToTravelDto(travelService.saveTravel(travel));
+        return travelMapper.mapToTravelDto(travelService.saveNewTravel(travel));
     }
 
     @PutMapping(value = "travels")
@@ -44,8 +39,6 @@ public class TravelController {
 
     @GetMapping(value = "travels/open")
     public List<TravelDto> getOpenTravels() {
-        return travelMapper.mapToTravelDtoList(travelService.getAllTravels().stream()
-                .filter(travel -> travel.getStatus().equals(Status.OPENED))
-                .collect(Collectors.toList()));
+        return travelMapper.mapToTravelDtoList(travelService.getOpenTravels());
     }
 }
