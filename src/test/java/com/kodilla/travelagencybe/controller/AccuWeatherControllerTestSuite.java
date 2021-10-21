@@ -15,7 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
 @WebMvcTest(AccuWeatherController.class)
@@ -28,7 +29,7 @@ public class AccuWeatherControllerTestSuite {
     private AccuWeatherService accuWeatherService;
 
     @Test
-    void shouldCheckAccuWeather() throws Exception{
+    void shouldCheckAccuWeather() throws Exception {
         //given
         MetricDto metricDto = new MetricDto(25.5);
         TemperatureDto temperatureDto = new TemperatureDto(metricDto);
@@ -39,9 +40,9 @@ public class AccuWeatherControllerTestSuite {
         //when&then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                         .get("/travelAgencyBe/v1/accuweather/check")
-                         .param("city", "Warsaw")
-                         .contentType(MediaType.APPLICATION_JSON))
+                        .get("/travelAgencyBe/v1/accuweather/check")
+                        .param("city", "Warsaw")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.WeatherText", Matchers.is("Sunny")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Temperature.Metric.Value", Matchers.is(25.5)));

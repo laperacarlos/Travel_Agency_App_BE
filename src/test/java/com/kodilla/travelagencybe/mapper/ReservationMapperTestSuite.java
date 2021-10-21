@@ -1,6 +1,9 @@
 package com.kodilla.travelagencybe.mapper;
 
-import com.kodilla.travelagencybe.domain.*;
+import com.kodilla.travelagencybe.domain.Reservation;
+import com.kodilla.travelagencybe.domain.ReservationDto;
+import com.kodilla.travelagencybe.domain.Travel;
+import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.enums.*;
 import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 public class ReservationMapperTestSuite {

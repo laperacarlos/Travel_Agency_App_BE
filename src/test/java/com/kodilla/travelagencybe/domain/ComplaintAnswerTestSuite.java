@@ -62,7 +62,7 @@ public class ComplaintAnswerTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint complaint = new Complaint(null, reservation, "compliant description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(complaint);
         ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", timeProvider.getTime());
 
@@ -88,7 +88,7 @@ public class ComplaintAnswerTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint complaint = new Complaint(null, reservation, "compliant description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(complaint);
         ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
@@ -117,7 +117,7 @@ public class ComplaintAnswerTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint complaint = new Complaint(null, reservation, "compliant description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(complaint);
         ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
@@ -147,7 +147,7 @@ public class ComplaintAnswerTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint complaint = new Complaint(null, reservation, "compliant description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(complaint);
         ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);
@@ -175,7 +175,7 @@ public class ComplaintAnswerTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint complaint = new Complaint(null, reservation, "compliant description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(complaint);
         ComplaintAnswer compliantAnswer = new ComplaintAnswer(null, complaint, "answer", LocalDateTime.of(2021, 11, 27, 21, 10));
         complaintAnswerDao.save(compliantAnswer);

@@ -27,7 +27,7 @@ public class UserController {
 
     @PutMapping(value = "users")
     public UserDto updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
-        if(userService.getUserById(userDto.getId()).isPresent()) {
+        if (userService.getUserById(userDto.getId()).isPresent()) {
             return userMapper.mapToUserDto(userService.saveUser(userMapper.mapToUser(userDto)));
         } else throw new UserNotFoundException(userDto.getId());
 

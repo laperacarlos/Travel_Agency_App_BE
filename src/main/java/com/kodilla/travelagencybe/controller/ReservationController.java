@@ -23,14 +23,14 @@ public class ReservationController {
     private final UserService userService;
 
     @PostMapping(value = "reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ReservationDto createReservation (@RequestBody ReservationDto reservationDto) {
+    public ReservationDto createReservation(@RequestBody ReservationDto reservationDto) {
         Reservation reservation = reservationMapper.mapToReservation(reservationDto);
         return reservationMapper.mapToReservationDto(reservationService.saveNewReservation(reservation));
     }
 
     @PutMapping(value = "reservations")
-    public void updateReservation (@RequestBody ReservationDto reservationDto) throws ReservationNotFoundException {
-        if(reservationService.getReservationById(reservationDto.getId()).isPresent()) {
+    public void updateReservation(@RequestBody ReservationDto reservationDto) throws ReservationNotFoundException {
+        if (reservationService.getReservationById(reservationDto.getId()).isPresent()) {
             reservationService.saveReservation(reservationMapper.mapToReservation(reservationDto));
         } else throw new ReservationNotFoundException(reservationDto.getId());
     }

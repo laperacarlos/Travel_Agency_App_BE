@@ -27,7 +27,7 @@ public class TravelController {
 
     @PutMapping(value = "travels")
     public void updateTravel(@RequestBody TravelDto travelDto) throws TravelNotFoundException {
-        if(travelService.getTravelById(travelDto.getId()).isPresent()) {
+        if (travelService.getTravelById(travelDto.getId()).isPresent()) {
             travelService.saveTravel(travelMapper.mapToTravel(travelDto));
         } else throw new TravelNotFoundException(travelDto.getId());
     }

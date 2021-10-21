@@ -25,7 +25,7 @@ public class ComplaintController {
 
     @PutMapping(value = "complaints")
     public void updateComplaint(@RequestBody ComplaintDto complaintDto) throws ComplaintNotFoundException {
-        if(complaintService.getComplaintById(complaintDto.getId()).isPresent()) {
+        if (complaintService.getComplaintById(complaintDto.getId()).isPresent()) {
             complaintService.saveCompliant(complaintMapper.mapToComplaint(complaintDto));
         } else throw new ComplaintNotFoundException(complaintDto.getId());
     }

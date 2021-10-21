@@ -14,7 +14,7 @@ public class AccuWeatherController {
     private final AccuWeatherService accuWeatherService;
 
     @GetMapping("check")
-    public WeatherDto checkWeather(@RequestParam String city) throws Exception{
+    public WeatherDto checkWeather(@RequestParam String city) throws Exception {
         return accuWeatherService.checkWeather(city);
     }
 }

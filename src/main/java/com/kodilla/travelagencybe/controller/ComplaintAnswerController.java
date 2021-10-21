@@ -25,14 +25,14 @@ public class ComplaintAnswerController {
 
     @PutMapping(value = "complaints/answers")
     public void updateComplaintAnswer(@RequestBody ComplaintAnswerDto complaintAnswerDto) throws ComplaintAnswerNotFoundException {
-        if(complaintAnswerService.getAnswerById(complaintAnswerDto.getId()).isPresent()) {
+        if (complaintAnswerService.getAnswerById(complaintAnswerDto.getId()).isPresent()) {
             complaintAnswerService.saveAnswer(complaintAnswerMapper.mapToComplaintAnswer(complaintAnswerDto));
         } else throw new ComplaintAnswerNotFoundException(complaintAnswerDto.getId());
     }
 
     @DeleteMapping(value = "complaints/answers/{id}")
     public void deleteComplaintAnswer(@PathVariable Long id) throws ComplaintAnswerNotFoundException {
-        if(complaintAnswerService.getAnswerById(id).isPresent()) {
+        if (complaintAnswerService.getAnswerById(id).isPresent()) {
             complaintAnswerService.deleteById(id);
         } else throw new ComplaintAnswerNotFoundException(id);
 

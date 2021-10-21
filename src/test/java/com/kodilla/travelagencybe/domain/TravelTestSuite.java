@@ -48,7 +48,7 @@ public class TravelTestSuite {
         Travel travel = new Travel(null, "Warsaw", "Boston",
                 LocalDate.of(2021, 11, 7),
                 LocalDate.of(2021, 11, 27),
-                Status.OPENED,  LocalDateTime.of(2021, 8, 19, 14, 10), new ArrayList<>());
+                Status.OPENED, LocalDateTime.of(2021, 8, 19, 14, 10), new ArrayList<>());
         travelDao.save(travel);
 
         //when

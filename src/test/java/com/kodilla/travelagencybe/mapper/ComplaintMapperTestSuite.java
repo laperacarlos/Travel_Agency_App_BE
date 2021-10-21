@@ -11,7 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 public class ComplaintMapperTestSuite {
@@ -34,7 +35,7 @@ public class ComplaintMapperTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         ComplaintDto complaintDto = new ComplaintDto(1L, reservation, "complaint description",
-                LocalDateTime.of(2021, 8, 19, 14, 10),null, null, Status.OPENED);
+                LocalDateTime.of(2021, 8, 19, 14, 10), null, null, Status.OPENED);
 
         //when
         Complaint complaint = complaintMapper.mapToComplaint(complaintDto);
@@ -61,7 +62,7 @@ public class ComplaintMapperTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2021, 8, 19, 14, 10),null, null, Status.OPENED);
+                LocalDateTime.of(2021, 8, 19, 14, 10), null, null, Status.OPENED);
 
         //when
         ComplaintDto complaintDto = complaintMapper.mapToComplaintDto(complaint);

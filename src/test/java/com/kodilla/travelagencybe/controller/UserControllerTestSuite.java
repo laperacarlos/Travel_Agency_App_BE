@@ -2,10 +2,10 @@ package com.kodilla.travelagencybe.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kodilla.travelagencybe.enums.UserStatus;
-import com.kodilla.travelagencybe.gson.LocalDateTimeSerializer;
 import com.kodilla.travelagencybe.domain.User;
 import com.kodilla.travelagencybe.domain.UserDto;
+import com.kodilla.travelagencybe.enums.UserStatus;
+import com.kodilla.travelagencybe.gson.LocalDateTimeSerializer;
 import com.kodilla.travelagencybe.mapper.UserMapper;
 import com.kodilla.travelagencybe.service.UserService;
 import com.kodilla.travelagencybe.utility.TimeProvider;
@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
 @WebMvcTest(UserController.class)
@@ -44,7 +45,7 @@ public class UserControllerTestSuite {
     private UserMapper userMapper;
 
     @Test
-    void shouldGetListOfAllUsers() throws Exception{
+    void shouldGetListOfAllUsers() throws Exception {
         //given
         List<User> userList = List.of(new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>()));
         List<UserDto> mappedUserList = List.of(new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>()));
@@ -56,8 +57,8 @@ public class UserControllerTestSuite {
         //when&then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                         .get("/travelAgencyBe/v1/users")
-                         .contentType(MediaType.APPLICATION_JSON))
+                        .get("/travelAgencyBe/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
@@ -70,7 +71,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
-    void shouldCreateUser() throws Exception{
+    void shouldCreateUser() throws Exception {
         //given
         User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
@@ -102,7 +103,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
-    void shouldUpdateUser() throws Exception{
+    void shouldUpdateUser() throws Exception {
         //given
         User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
         UserDto userDto = new UserDto(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
@@ -135,7 +136,7 @@ public class UserControllerTestSuite {
     }
 
     @Test
-    void shouldDeleteUser() throws Exception{
+    void shouldDeleteUser() throws Exception {
         //given
         User user = new User(1L, "username", "email@com", LocalDateTime.of(2020, 11, 7, 7, 7), UserStatus.YES, UserStatus.NO, new ArrayList<>());
 

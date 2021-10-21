@@ -51,7 +51,7 @@ public class ComplaintAnswerControllerTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2020, 11, 7, 7, 7), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         ComplaintAnswer complaintAnswer = new ComplaintAnswer(1L, complaint, "answer",
                 LocalDateTime.of(2020, 11, 7, 7, 7));
@@ -94,7 +94,7 @@ public class ComplaintAnswerControllerTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2020, 11, 7, 7, 7), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         ComplaintAnswer complaintAnswer = new ComplaintAnswer(1L, complaint, "answer",
                 LocalDateTime.of(2021, 11, 27, 21, 10));
@@ -132,7 +132,7 @@ public class ComplaintAnswerControllerTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, LocalDateTime.of(2020, 11, 7, 7, 7), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         ComplaintAnswer complaintAnswer = new ComplaintAnswer(1L, complaint, "answer",
                 LocalDateTime.of(2021, 11, 27, 21, 10));

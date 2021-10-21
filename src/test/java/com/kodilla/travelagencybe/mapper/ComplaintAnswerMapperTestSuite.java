@@ -34,7 +34,7 @@ public class ComplaintAnswerMapperTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         ComplaintAnswerDto complaintAnswerDto = new ComplaintAnswerDto(1L, complaint, "answer",
                 LocalDateTime.of(2021, 8, 19, 14, 10));
 
@@ -60,7 +60,7 @@ public class ComplaintAnswerMapperTestSuite {
                 TravelType.BASIC, HotelStandard.FOUR, MealStandard.ALL_INCLUSIVE,
                 null, timeProvider.getTime(), Status.OPENED);
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         ComplaintAnswer complaintAnswer = new ComplaintAnswer(1L, complaint, "answer",
                 LocalDateTime.of(2021, 8, 19, 14, 10));
 

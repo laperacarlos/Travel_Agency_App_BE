@@ -1,4 +1,5 @@
 package com.kodilla.travelagencybe.exception;
+
 public class ComplaintNotFoundException extends Exception {
 
     public ComplaintNotFoundException(Long id) {

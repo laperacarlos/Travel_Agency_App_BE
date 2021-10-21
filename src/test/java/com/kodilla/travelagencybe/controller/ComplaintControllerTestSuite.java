@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
 @WebMvcTest(ComplaintController.class)
@@ -52,10 +52,10 @@ public class ComplaintControllerTestSuite {
                 null, LocalDateTime.of(2020, 11, 7, 7, 7), Status.OPENED);
 
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         ComplaintDto complaintDto = new ComplaintDto(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         when(complaintMapper.mapToComplaint(complaintDto)).thenReturn(complaint);
         when(complaintMapper.mapToComplaintDto(complaintService.saveNewCompliant(complaint))).thenReturn(complaintDto);
@@ -94,10 +94,10 @@ public class ComplaintControllerTestSuite {
                 null, LocalDateTime.of(2020, 11, 7, 7, 7), Status.OPENED);
 
         Complaint complaint = new Complaint(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         ComplaintDto complaintDto = new ComplaintDto(1L, reservation, "complaint description",
-                LocalDateTime.of(2020, 11, 7, 7, 7),null, null, Status.OPENED);
+                LocalDateTime.of(2020, 11, 7, 7, 7), null, null, Status.OPENED);
 
         when(complaintService.getComplaintById(complaintDto.getId())).thenReturn(Optional.of(complaint));
 

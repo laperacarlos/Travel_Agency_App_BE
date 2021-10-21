@@ -17,7 +17,7 @@ public class UserService {
     private final UserDao userDao;
     private final TimeProvider timeProvider;
 
-    public User saveNewUser(final User user){
+    public User saveNewUser(final User user) {
         user.setCreationDate(timeProvider.getTime());
         return userDao.save(user);
     }
@@ -27,11 +27,11 @@ public class UserService {
         userDao.save(user);
     }
 
-    public User saveUser(final User user){
+    public User saveUser(final User user) {
         return userDao.save(user);
     }
 
-    public Optional<User> getUserById(final Long id){
+    public Optional<User> getUserById(final Long id) {
         return userDao.findById(id);
     }
 

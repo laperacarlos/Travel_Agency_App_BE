@@ -1,4 +1,5 @@
 package com.kodilla.travelagencybe.exception;
+
 public class UserNotFoundException extends Exception {
 
     public UserNotFoundException(Long id) {

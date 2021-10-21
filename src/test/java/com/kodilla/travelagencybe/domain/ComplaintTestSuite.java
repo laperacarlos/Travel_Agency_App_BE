@@ -3,7 +3,10 @@ package com.kodilla.travelagencybe.domain;
 import com.kodilla.travelagencybe.enums.*;
 import com.kodilla.travelagencybe.exception.ComplaintNotFoundException;
 import com.kodilla.travelagencybe.exception.ReservationNotFoundException;
-import com.kodilla.travelagencybe.repository.*;
+import com.kodilla.travelagencybe.repository.ComplaintDao;
+import com.kodilla.travelagencybe.repository.ReservationDao;
+import com.kodilla.travelagencybe.repository.TravelDao;
+import com.kodilla.travelagencybe.repository.UserDao;
 import com.kodilla.travelagencybe.utility.TimeProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +61,7 @@ public class ComplaintTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint compliant = new Complaint(null, reservation, "complaint description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         //when
         Complaint savedCompliant = complaintDao.save(compliant);
 
@@ -81,7 +84,7 @@ public class ComplaintTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint compliant = new Complaint(null, reservation, "complaint description",
-                LocalDateTime.of(2021, 11, 27, 21, 10),null, null, Status.OPENED);
+                LocalDateTime.of(2021, 11, 27, 21, 10), null, null, Status.OPENED);
         complaintDao.save(compliant);
 
         //when
@@ -110,7 +113,7 @@ public class ComplaintTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint compliant = new Complaint(null, reservation, "complaint description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(compliant);
 
         //when
@@ -140,7 +143,7 @@ public class ComplaintTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint compliant = new Complaint(null, reservation, "complaint description",
-                timeProvider.getTime(),null, null, Status.OPENED);
+                timeProvider.getTime(), null, null, Status.OPENED);
         complaintDao.save(compliant);
 
         //when
@@ -166,7 +169,7 @@ public class ComplaintTestSuite {
                 null, timeProvider.getTime(), Status.OPENED);
         reservationDao.save(reservation);
         Complaint compliant = new Complaint(null, reservation, "complaint description",
-                LocalDateTime.of(2021, 11, 27, 21, 10),null, null, Status.OPENED);
+                LocalDateTime.of(2021, 11, 27, 21, 10), null, null, Status.OPENED);
         complaintDao.save(compliant);
 
         //when

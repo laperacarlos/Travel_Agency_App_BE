@@ -1,4 +1,5 @@
 package com.kodilla.travelagencybe.exception;
+
 public class LocationNotFoundException extends Exception {
 
     public LocationNotFoundException(String location) {

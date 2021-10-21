@@ -1,4 +1,5 @@
 package com.kodilla.travelagencybe.exception;
+
 public class ReservationNotFoundException extends Exception {
 
     public ReservationNotFoundException(Long id) {

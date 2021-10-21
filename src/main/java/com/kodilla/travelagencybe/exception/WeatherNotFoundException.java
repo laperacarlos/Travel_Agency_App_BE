@@ -1,4 +1,5 @@
 package com.kodilla.travelagencybe.exception;
+
 public class WeatherNotFoundException extends Exception {
 
     public WeatherNotFoundException(String location) {

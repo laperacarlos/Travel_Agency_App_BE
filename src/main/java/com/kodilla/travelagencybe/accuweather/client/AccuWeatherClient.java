@@ -56,7 +56,7 @@ public class AccuWeatherClient {
         try {
             Location[] locations = restTemplate.getForObject(url, Location[].class);
             Location[] optLocation = Optional.ofNullable(locations).orElse(new Location[]{});
-            if(optLocation.length == 0) {
+            if (optLocation.length == 0) {
                 throw new LocationNotFoundException(cityName);
             } else return locations[0].key;
         } catch (RestClientException e) {
